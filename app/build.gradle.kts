@@ -6,11 +6,11 @@ plugins {
 }
 android {
     namespace = "com.securekioskv2"
-    compileSdk = 35
+    compileSdk = 34
     defaultConfig {
         applicationId = "com.securekioskv2"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

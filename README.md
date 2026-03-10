@@ -28,3 +28,7 @@ Baseline Android kiosk com foco em segurança, compliance e uso legítimo.
 
 ## Política do Gradle Wrapper
 - `gradle-wrapper.jar` pode ser regenerado automaticamente no CI (`gradle wrapper`) quando ausente no repositório.
+
+
+## Setup automático de toolchain Android
+- Execute `./scripts/setup_android_env.sh` para instalar/licenciar SDK (platform-tools, android-34, build-tools 34.0.0 e cmdline-tools) em ambientes isolados.
