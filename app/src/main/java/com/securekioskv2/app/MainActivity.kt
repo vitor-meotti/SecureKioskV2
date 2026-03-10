@@ -30,13 +30,20 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController, startDestination = sessionVm.startDestination()) {
                         composable("onboarding") {
                             OnboardingScreen(
-                                onContinue = { navController.navigate("dashboard") }
+                                onContinue = {
+                                    navController.navigate("dashboard") {
+                                        popUpTo("onboarding") { inclusive = true }
+                                        launchSingleTop = true
+                                    }
+                                }
                             )
                         }
                         composable("dashboard") { DashboardScreen({ navController.navigate("admin") }, { navController.navigate("diagnostics") }) }
                         composable("admin") {
                             AdminAuthScreen(
-                                onAuthenticated = { navController.popBackStack() }
+                                onAuthenticated = {
+                                    navController.popBackStack()
+                                }
                             )
                         }
                         composable("diagnostics") { DiagnosticsScreen() }
