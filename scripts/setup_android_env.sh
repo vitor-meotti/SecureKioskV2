@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+DEFAULT_ANDROID_SDK_DIR="$HOME/android-sdk"
+ANDROID_HOME_WAS_SET=${ANDROID_HOME+x}
+ANDROID_SDK_ROOT_WAS_SET=${ANDROID_SDK_ROOT+x}
 export ANDROID_HOME="${ANDROID_HOME:-/usr/lib/android-sdk}"
 export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
 
@@ -11,7 +14,23 @@ if [[ -z "${JAVA_HOME:-}" ]]; then
   fi
 fi
 
-mkdir -p "$ANDROID_HOME"
+ensure_sdk_root_writable() {
+  if mkdir -p "$ANDROID_HOME" 2>/dev/null; then
+    return
+  fi
+
+  if [[ -n "${ANDROID_HOME_WAS_SET:-}" || -n "${ANDROID_SDK_ROOT_WAS_SET:-}" ]]; then
+    echo "ERRO: sem permissão para criar ANDROID_HOME em $ANDROID_HOME. Defina um diretório gravável." >&2
+    exit 1
+  fi
+
+  echo "AVISO: sem permissão em $ANDROID_HOME. Usando fallback em $DEFAULT_ANDROID_SDK_DIR" >&2
+  export ANDROID_HOME="$DEFAULT_ANDROID_SDK_DIR"
+  export ANDROID_SDK_ROOT="$DEFAULT_ANDROID_SDK_DIR"
+  mkdir -p "$ANDROID_HOME"
+}
+
+ensure_sdk_root_writable
 
 ensure_java_compatible() {
   if ! command -v java >/dev/null 2>&1; then
