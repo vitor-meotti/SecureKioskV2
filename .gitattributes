@@ -1,0 +1,8 @@
+# Other binaries
+*.class binary
+*.o binary
+*.so binary
+*.jar binary diff=jar
+
+# Gradle wrapper tracked via Git LFS (must stay versioned)
+gradle/wrapper/gradle-wrapper.jar filter=lfs diff=lfs merge=lfs -text
