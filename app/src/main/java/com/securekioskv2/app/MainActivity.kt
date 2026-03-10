@@ -28,9 +28,17 @@ class MainActivity : ComponentActivity() {
             SecureKioskTheme {
                 Surface {
                     NavHost(navController, startDestination = sessionVm.startDestination()) {
-                        composable("onboarding") { OnboardingScreen { navController.navigate("dashboard") } }
+                        composable("onboarding") {
+                            OnboardingScreen(
+                                onContinue = { navController.navigate("dashboard") }
+                            )
+                        }
                         composable("dashboard") { DashboardScreen({ navController.navigate("admin") }, { navController.navigate("diagnostics") }) }
-                        composable("admin") { AdminAuthScreen { navController.popBackStack() } }
+                        composable("admin") {
+                            AdminAuthScreen(
+                                onAuthenticated = { navController.popBackStack() }
+                            )
+                        }
                         composable("diagnostics") { DiagnosticsScreen() }
                     }
                 }
