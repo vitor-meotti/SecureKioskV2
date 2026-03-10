@@ -11,15 +11,12 @@ jobs:
           java-version: '17'
 
       - name: Generate Gradle wrapper (if missing)
+        shell: bash
         run: |
           if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
-            mkdir -p /tmp/wrapper-bootstrap/gradle/wrapper
-            cat > /tmp/wrapper-bootstrap/settings.gradle.kts <<'SET'
-            rootProject.name = "wrapper-bootstrap"
-            SET
-            cat > /tmp/wrapper-bootstrap/build.gradle.kts <<'BLD'
-            tasks.register("noop")
-            BLD
+            mkdir -p /tmp/wrapper-bootstrap
+            echo 'rootProject.name = "wrapper-bootstrap"' > /tmp/wrapper-bootstrap/settings.gradle.kts
+            echo 'tasks.register("noop")' > /tmp/wrapper-bootstrap/build.gradle.kts
             (cd /tmp/wrapper-bootstrap && gradle wrapper --gradle-version 8.10.2 --no-validate-url)
             cp /tmp/wrapper-bootstrap/gradle/wrapper/gradle-wrapper.jar gradle/wrapper/gradle-wrapper.jar
           fi
