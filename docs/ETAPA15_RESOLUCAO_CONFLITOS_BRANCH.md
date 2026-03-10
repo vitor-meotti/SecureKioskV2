@@ -19,6 +19,4 @@
 ## Complemento operacional
 - Wrapper Gradle completo foi versionado para evitar falha `./gradlew: No such file or directory` no GitHub Actions.
 
-- Adicionado `scripts/check_wrapper_policy.sh` para validar que o wrapper JAR não está sendo ignorado.
-
 - Ajuste aplicado: `gradle-wrapper.jar` removido do versionamento e regenerado no CI quando necessário.

@@ -31,7 +31,11 @@ fun AdminAuthScreen(onAuthenticated: () -> Unit, vm: AdminAuthViewModel = hiltVi
         }
     }
 
-    if (state.authenticated) onAuthenticated()
+    LaunchedEffect(state.authenticated) {
+        if (state.authenticated) {
+            onAuthenticated()
+        }
+    }
 
     Column(Modifier.fillMaxSize().padding(24.dp)) {
         OutlinedTextField(
